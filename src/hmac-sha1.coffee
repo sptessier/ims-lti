@@ -67,7 +67,12 @@ class HMAC_SHA1
     if protocol is undefined
       encrypted = req.connection.encrypted
       protocol = (encrypted and 'https') or 'http'
-    
+
+    # This code is only needed on Node4. We should be able to remove this when migrating meteor >= 1.6
+    if req.connection.encrypted is undefined
+      encrypted = if req.headers['x-forwarded-proto'] == 'https' then true else false
+      protocol = (encrypted and 'https') or 'http'
+
     parsedUrl  = url.parse originalUrl, true
     hitUrl     = protocol + '://' + req.headers.host + parsedUrl.pathname
 
