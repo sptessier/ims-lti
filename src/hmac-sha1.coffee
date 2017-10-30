@@ -76,9 +76,6 @@ class HMAC_SHA1
     parsedUrl  = url.parse originalUrl, true
     hitUrl     = protocol + '://' + req.headers.host + parsedUrl.pathname
 
-    console.log('Encoding LTI URL ' + hitUrl);
-    console.log('req.connection.encrypted ' + req.connection.encrypted);
-
     @build_signature_raw hitUrl, parsedUrl, req.method, body, consumer_secret, token
 
   sign_string: (str, key, token) ->
